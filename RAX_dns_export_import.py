@@ -69,11 +69,16 @@ def dns_export_import_single(srcddi, srctoken, dstddi, dsttoken, custom_dns_id):
     export_dns_bind9_request = s.get(export_dns_joburl, headers=export_dns_headers)
     export_dns_bind9_text = ''
     for line in export_dns_bind9_request.json()['response']['contents'].splitlines():
-        if 'stabletransit.com.' in line:
+        if 'dns1.stabletransit.com.' in line:
+            continue
+        if 'dns2.stabletransit.com.' in line:
             continue
         else:
             export_dns_bind9_text += line + '\n'
     export_dns_bind9_json = json.dumps(export_dns_bind9_text)
+    if export_dns_bind9_text == "":
+        print "\nNo records found to import for this domain, quitting..."
+        quit()
     if import_option != True:
         print "\nImport option not used, printing Bind9 export below quitting:\n"
         print export_dns_bind9_json
@@ -173,11 +178,16 @@ def dns_export_import(srcddi, srctoken, dstddi, dsttoken):
         export_dns_bind9_request = s.get(export_dns_joburl, headers=export_dns_headers)
         export_dns_bind9_text = ''
         for line in export_dns_bind9_request.json()['response']['contents'].splitlines():
-            if 'stabletransit.com.' in line:
+            if 'dns1.stabletransit.com.' in line:
+                continue
+            if 'dns2.stabletransit.com.' in line:
                 continue
             else:
                 export_dns_bind9_text += line + '\n'
         export_dns_bind9_json = json.dumps(export_dns_bind9_text)
+        if export_dns_bind9_text == "":
+            print "\nNo records found for domain ID : " + str(dns_id)
+            continue
         if import_option != True:
             print "\nImport option not used, printing Bind9 export below and continuing: \n"
             print export_dns_bind9_json

@@ -69,6 +69,8 @@ def dns_export_import_single(srcddi, srctoken, dstddi, dsttoken, custom_dns_id):
     export_dns_bind9_request = s.get(export_dns_joburl, headers=export_dns_headers)
     export_dns_bind9_text = ''
     for line in export_dns_bind9_request.json()['response']['contents'].splitlines():
+        if 'ipadmin.stabletransit.com.' in line:
+            export_dns_bind9_text += line + '\n'
         if 'dns1.stabletransit.com.' in line:
             continue
         if 'dns2.stabletransit.com.' in line:
@@ -178,6 +180,8 @@ def dns_export_import(srcddi, srctoken, dstddi, dsttoken):
         export_dns_bind9_request = s.get(export_dns_joburl, headers=export_dns_headers)
         export_dns_bind9_text = ''
         for line in export_dns_bind9_request.json()['response']['contents'].splitlines():
+            if 'ipadmin.stabletransit.com.' in line:
+                export_dns_bind9_text += line + '\n'
             if 'dns1.stabletransit.com.' in line:
                 continue
             if 'dns2.stabletransit.com.' in line:

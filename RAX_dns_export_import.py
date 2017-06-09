@@ -70,7 +70,8 @@ def dns_export_import_single(srcddi, srctoken, dstddi, dsttoken, custom_dns_id):
     export_dns_bind9_text = ''
     for line in export_dns_bind9_request.json()['response']['contents'].splitlines():
         if 'ipadmin.stabletransit.com.' in line:
-            export_dns_bind9_text += line + '\n'
+            bind_line_list = line.split()
+            export_dns_bind9_text += bind_line_list[0] + '\t\t' + bind_line_list[1] + '\tIN\tSOA\t' + 'ns.rackspace.com. ' + admin_email + ' ' + bind_line_list[6] + ' ' + bind_line_list[7] + ' ' + bind_line_list[8] + ' ' + bind_line_list[9] + ' ' + bind_line_list[10] + '\n'
         if 'dns1.stabletransit.com.' in line:
             continue
         if 'dns2.stabletransit.com.' in line:
@@ -181,7 +182,8 @@ def dns_export_import(srcddi, srctoken, dstddi, dsttoken):
         export_dns_bind9_text = ''
         for line in export_dns_bind9_request.json()['response']['contents'].splitlines():
             if 'ipadmin.stabletransit.com.' in line:
-                export_dns_bind9_text += line + '\n'
+                bind_line_list = line.split()
+                export_dns_bind9_text += bind_line_list[0] + '\t\t' + bind_line_list[1] + '\tIN\tSOA\t' + 'ns.rackspace.com. ' + admin_email + ' ' + bind_line_list[6] + ' ' + bind_line_list[7] + ' ' + bind_line_list[8] + ' ' + bind_line_list[9] + ' ' + bind_line_list[10] + '\n'
             if 'dns1.stabletransit.com.' in line:
                 continue
             if 'dns2.stabletransit.com.' in line:
@@ -298,6 +300,11 @@ required=False,
 default=None,
 help='A file containing DNS IDs that you want to export or transfer')
 
+parser.add_argument('--email',
+required=True,
+default=None,
+help='The administrative email address to be inserted to the SOA record if it has to be generated manually, must be formatted email.domain.com.')
+
 args = parser.parse_args()
 
 srcuser = args.srcuser
@@ -311,6 +318,7 @@ srctoken = srctoken_return.auth_call()
 custom_dns_id = args.domainid
 import_option = args.importdomains
 dns_id_file = args.dnsidfile
+admin_email = args.email
 
 if import_option != True:
     #don't set dst variables since they don't exist

@@ -5,19 +5,19 @@ The DNS-Export-Import script will export (in bind9 format) a list of DNS IDs or 
  
 Usage Example WITHOUT IMPORTING domains (will export in bind9 only, will not delete source):
  
-python dns_export_import.py --srcddi \<source ddi\> --srcuser \<source user\> --srcapikey \<source api key\> --domainid \<your domain id\>
+python dns_export_import.py --srcddi \<source ddi\> --srcuser \<source user\> --srcapikey \<source api key\> --domainid \<your domain id\> --email \<name.domain.com.\>
  
 Usage Example SPECIFYING specific domain (will export, delete source, and import one domain specified):
  
-python dns_export_import.py --dstddi \<destination ddi\> --dstuser \<destination user\> --dstapikey \<destination api key\> --srcddi \<source ddi\> --srcuser \<source user\> --srcapikey \<source api key\> --domainid \<your domain id\> --importdomains
+python dns_export_import.py --dstddi \<destination ddi\> --dstuser \<destination user\> --dstapikey \<destination api key\> --srcddi \<source ddi\> --srcuser \<source user\> --srcapikey \<source api key\> --domainid \<your domain id\> --importdomains --email \<name.domain.com.\>
  
 Usage Example WITH FILE and import (will export, delete source, and import domains inside file):
  
-python dns_export_import.py --dstddi \<destination ddi\> --dstuser \<destination user\> --dstapikey \<destination api key\> --srcddi \<source ddi\> --srcuser \<source user\> --srcapikey \<source api key\> --dnsidfile \</path/to/file\> --importdomains
+python dns_export_import.py --dstddi \<destination ddi\> --dstuser \<destination user\> --dstapikey \<destination api key\> --srcddi \<source ddi\> --srcuser \<source user\> --srcapikey \<source api key\> --dnsidfile \</path/to/file\> --importdomains --email \<name.domain.com.\>
  
 Real Example WITHOUT FILE (will export, delete source, and import all domains):
  
-python dns_export_import.py --dstddi 123456 --dstuser bob1 --dstapikey zcf0ec12d0df4deb9de9e00a47c5113c --srcddi 654321 --srcuser bob2 --srcapikey a755bbe91fbd4629995eeddb8b072d4z --importdomains
+python dns_export_import.py --dstddi 123456 --dstuser bob1 --dstapikey zcf0ec12d0df4deb9de9e00a47c5113c --srcddi 654321 --srcuser bob2 --srcapikey a755bbe91fbd4629995eeddb8b072d4z --importdomains --email johnsmith.gmail.com.
  
 The format for the DNS ID file must follow this format
  

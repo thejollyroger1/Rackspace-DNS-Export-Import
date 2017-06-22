@@ -83,7 +83,7 @@ def dns_export_import_single(srcddi, srctoken, dstddi, dsttoken, custom_dns_id):
         print "\nNo records found to import for this domain, quitting..."
         quit()
     if import_option != True:
-        print "\nImport option not used, printing Bind9 export below quitting:\n"
+        print "\nImport option not used, printing Bind9 export below and quitting:\n"
         print export_dns_bind9_json
         quit()
     dns_import_data = '{"domains" : [ {"contentType" : "BIND_9", "contents" : %s} ]}' % export_dns_bind9_json
@@ -195,7 +195,7 @@ def dns_export_import(srcddi, srctoken, dstddi, dsttoken):
             print "\nNo records found for domain ID : " + str(dns_id)
             continue
         if import_option != True:
-            print "\nImport option not used, printing Bind9 export below and continuing: \n"
+            print "\nImport option not used, printing all Bind9 exports below and quitting: \n"
             print export_dns_bind9_json
             time.sleep(1)
             continue

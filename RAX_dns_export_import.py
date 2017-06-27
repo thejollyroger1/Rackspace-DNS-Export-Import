@@ -139,7 +139,7 @@ def dns_export_import_single(srcddi, srctoken, dstddi, dsttoken, custom_dns_id):
 def dns_export_import(srcddi, srctoken, dstddi, dsttoken):
     id_list = []
     if dns_id_file:
-        print "Domain ID file specified, gathering ID list...\n"
+        print "\nDomain ID file specified, gathering ID list...\n"
         if os.path.isfile(dns_id_file):
             with open(dns_id_file) as file:
                 content = [x.strip('\n') for x in file.readlines()]
@@ -151,7 +151,17 @@ def dns_export_import(srcddi, srctoken, dstddi, dsttoken):
             print "\nDNS ID file not found! Quitting..."
             quit()
     else:
-        print "\nNo specific domain or DNS file provided, script will run against all domains on account"
+        print "\nNo specific domain or DNS file provided, script will run against ALL domains on account"
+        print "\nPlease verify you want to continue [y/n]: "
+        while True:
+            answer = raw_input().lower()
+            if answer in ('y', 'yes', 'ye'):
+                break
+            if answer in ('n', 'no'):
+                print "\nQuitting..."
+                quit()
+            else:
+                print "\nPlease provide a valid response"
         src_dns_endpoint = 'https://dns.api.rackspacecloud.com/v1.0/%s/domains' % srcddi
         dns_headers = {'X-Auth-Token': srctoken}
         dns_get = s.get(src_dns_endpoint, headers=dns_headers)

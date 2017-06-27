@@ -105,11 +105,11 @@ def dns_export_import_single(srcddi, srctoken, dstddi, dsttoken, custom_dns_id):
         print "\nStatus: " + str(remove_domain_check.json()['status'])
         if str(remove_domain_check.json()['status']) == 'ERROR':
             print '\nError Message : ' + str(remove_domain_check.json()['error'])
+            print '\nQuitting...'
+            quit()
 
     if str(remove_domain_check.json()['status']) == 'COMPLETED':
         print "\nDomain removal successful, preparing to import domain to destination account"
-        time.sleep(10)
-        
         import_dns_endpoint = 'https://dns.api.rackspacecloud.com/v1.0/%s/domains/import' % dstddi
         import_dns_headers = {'X-Auth-Token': dsttoken, 'Accept': 'application/json', 'Content-Type': 'application/json'}
         import_dns_request = s.post(import_dns_endpoint, data=dns_import_data, headers=import_dns_headers)
@@ -119,7 +119,8 @@ def dns_export_import_single(srcddi, srctoken, dstddi, dsttoken, custom_dns_id):
         print "\nImport dns job URL : " + str(import_dns_job_url)
         import_job_headers = {'X-Auth-Token': dsttoken}
         import_job_check = s.get(import_dns_job_url, headers=import_job_headers)
-        time.sleep(2)
+        #Only 20 POSTs/min so adding 3 second sleep
+        time.sleep(3)
 
         while str(import_job_check.json()['status']) == 'RUNNING':
             time.sleep(5)
@@ -220,6 +221,8 @@ def dns_export_import(srcddi, srctoken, dstddi, dsttoken):
             print "\nStatus: " + str(remove_domain_check.json()['status'])
             if str(remove_domain_check.json()['status']) == 'ERROR':
                 print '\nError Message : ' + str(remove_domain_check.json()['error'])
+                print '\nSkipping domain ID : ' + dns_id
+                continue
     
         if str(remove_domain_check.json()['status']) == 'COMPLETED':
             print "\nDomain removal successful, preparing to import domain to destination account"

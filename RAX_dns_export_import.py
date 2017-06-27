@@ -152,9 +152,8 @@ def dns_export_import(srcddi, srctoken, dstddi, dsttoken):
             quit()
     else:
         print "\nNo specific domain or DNS file provided, script will run against ALL domains on account"
-        print "\nPlease verify you want to continue [y/n]: "
         while True:
-            answer = raw_input().lower()
+            answer = raw_input("\nPlease verify you want to continue [y/n]: ").lower()
             if answer in ('y', 'yes', 'ye'):
                 break
             if answer in ('n', 'no'):

@@ -140,7 +140,7 @@ def dns_export_import(srcddi, srctoken, dstddi, dsttoken):
     id_list = []
     if dns_id_file:
         print "Domain ID file specified, gathering ID list...\n"
-        if os.path.isfile(dns_id_file) == True:
+        if os.path.isfile(dns_id_file):
             with open(dns_id_file) as file:
                 content = [x.strip('\n') for x in file.readlines()]
                 for dns_id in content:

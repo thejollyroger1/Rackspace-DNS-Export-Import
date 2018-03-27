@@ -205,7 +205,7 @@ def dns_export_import(srcddi, srctoken, dstddi, dsttoken):
             print "\nNo records found for domain ID : " + str(dns_id)
             continue
         if import_option != True:
-            print "\nImport option not used, printing all Bind9 exports below and quitting: \n"
+            print "\nImport option not used, printing Bind9 export for domain ID : " + dns_id + " below: \n"
             print export_dns_bind9_json
             time.sleep(1)
             continue
